@@ -4,7 +4,6 @@ extends Node2D
 var color: Color = Color.WHITE
 var dragging: bool = false
 var delta: Vector2 = Vector2.ZERO
-var current_mouse_pos: Vector2 = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,28 +17,45 @@ func _process(delta: float) -> void:
 		queue_redraw()
 
 func _draw() -> void:
+	color = Color.AQUAMARINE if dragging else Color.WHITE
+	draw_circle(Vector2.ZERO, radius, color, false, 4)
+
 	if dragging:
-		color = Color.AQUAMARINE
-	else:
-		color = Color.WHITE
+		draw_force_arrow()
+		
+func draw_force_arrow():
+	draw_dashed_line(Vector2.ZERO, -delta, Color.BROWN, 4, delta.length()/10.0)
+	draw_circle(Vector2.ZERO, 10, Color.BROWN, true)
+
+	# arrow
+	var endpoints = [Vector2(-10, 20), Vector2(10, 20)]
+	var theta = (-delta).angle_to(Vector2.UP)
+	for end in endpoints:
+		var new_end = Vector2(cos(theta) * end.x - sin(theta) * end.y, sin(theta) * end.x + cos(theta) * end.y)
+		end.x = new_end.x
+		end.y = new_end.y
 	
-	draw_circle(position, radius, color, false, 4)
-	draw_line(position, current_mouse_pos, Color.BROWN)
+	draw_line(-delta, -delta + endpoints[0], Color.BROWN, 4)
+	draw_line(-delta, -delta + endpoints[1], Color.BROWN, 4)
+	
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if (event.position - position).length() < radius:
+		var length_from_center = (event.position - position).length()
+		print(length_from_center)
+		print(event.position)
+		if length_from_center < radius:
 			# Start dragging if the click is on the sprite.
 			if not dragging and event.pressed:
 				dragging = true
-				current_mouse_pos = event.position
+				delta = event.position - position
 			
 		# Stop dragging if the button is released.
 		if dragging and not event.pressed:
 			dragging = false
-			current_mouse_pos = Vector2.ZERO
+			delta = Vector2.ZERO
 	
 	if event is InputEventMouseMotion and dragging:
-		current_mouse_pos = event.position
-	
+		delta = event.position - position
+		
 	queue_redraw()

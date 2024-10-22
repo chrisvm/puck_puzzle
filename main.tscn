@@ -7,6 +7,6 @@
 script = ExtResource("1_771b4")
 
 [node name="PuckStartingPosition" type="Marker2D" parent="."]
-position = Vector2(100, 43)
+position = Vector2(210, 190)
 
 [node name="Puck" parent="." instance=ExtResource("1_u1g8j")]
