@@ -1,18 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://bndhbq3fu6eqi"]
+[gd_scene load_steps=5 format=3 uid="uid://bndhbq3fu6eqi"]
 
 [ext_resource type="Script" path="res://scripts/puck.gd" id="1_uc5px"]
 [ext_resource type="Script" path="res://scripts/puck_canvas.gd" id="2_dk60s"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tcddg"]
+friction = 0.6
+bounce = 0.64
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_x4sh5"]
 radius = 20.0
 
-[node name="Puck" type="Node2D"]
+[node name="Puck" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_tcddg")
+gravity_scale = 0.0
+lock_rotation = true
 script = ExtResource("1_uc5px")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-gravity_scale = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_x4sh5")
 
 [node name="PuckCanvas" type="Node2D" parent="."]

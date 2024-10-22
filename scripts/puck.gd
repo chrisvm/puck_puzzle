@@ -1,4 +1,6 @@
-extends Node2D
+extends RigidBody2D
+
+@export var impulse_force: float = 40.0
 
 var dragging: bool:
 	set(value):
@@ -11,19 +13,24 @@ var radius: int:
 		$PuckCanvas.radius = value
 	get:
 		return $PuckCanvas.radius
+		
+var delta: Vector2:
+	set(value):
+		$PuckCanvas.delta = value
+	get:
+		return $PuckCanvas.delta
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void
-	$RigidBody2D/CollisionShape2D.shape.radius = radius
+func _ready() -> void:
+	$CollisionShape2D.shape.radius = radius
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# if radius changed, set the collision shape radius and redraw.
-	if $RigidBody2D/CollisionShape2D.shape.radius != radius:
-		$RigidBody2D/CollisionShape2D.shape.radius = radius
+	if $CollisionShape2D.shape.radius != radius:
+		$CollisionShape2D.shape.radius = radius
 
 func _input(event):
-	var delta = Vector2.ZERO
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		var length_from_center = (event.position - position).length()
 		if length_from_center < radius:
@@ -36,10 +43,12 @@ func _input(event):
 		# Stop dragging if the button is released.
 		if dragging and not event.pressed:
 			dragging = false
+			apply_central_force(-delta * impulse_force)
+			delta = Vector2.ZERO
 			$PuckCanvas.queue_redraw()
 	
 	if event is InputEventMouseMotion and dragging:
 		delta = event.position - position
 		$PuckCanvas.queue_redraw()
 	
-	$PuckCanvas.delta = delta
+	

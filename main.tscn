@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://t1wy8wgr23k4"]
+[gd_scene load_steps=5 format=3 uid="uid://t1wy8wgr23k4"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_771b4"]
 [ext_resource type="PackedScene" uid="uid://bndhbq3fu6eqi" path="res://puck.tscn" id="1_u1g8j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y31bk"]
+size = Vector2(1282, 42.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6sv7"]
+size = Vector2(40, 725)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_771b4")
@@ -10,3 +16,22 @@ script = ExtResource("1_771b4")
 position = Vector2(210, 190)
 
 [node name="Puck" parent="." instance=ExtResource("1_u1g8j")]
+impulse_force = 80.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="NorthWall" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(640, -22)
+shape = SubResource("RectangleShape2D_y31bk")
+
+[node name="SouthWall" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(641, 741)
+shape = SubResource("RectangleShape2D_y31bk")
+
+[node name="EastWall" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1301, 363)
+shape = SubResource("RectangleShape2D_j6sv7")
+
+[node name="WestWall" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-20, 357)
+shape = SubResource("RectangleShape2D_j6sv7")
