@@ -1,14 +1,12 @@
 extends Node2D
 
 @export var radius = 60
-var color: Color = Color.WHITE
 var dragging: bool = false
 var delta: Vector2 = Vector2.ZERO
 
 
-
 func _draw() -> void:
-	color = Color.AQUAMARINE if dragging else Color.WHITE
+	var color = Color.AQUAMARINE if dragging else Color.WHITE
 	draw_circle(Vector2.ZERO, radius, color, false, 4)
 
 	if dragging:
