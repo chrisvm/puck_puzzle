@@ -29,14 +29,11 @@ func draw_force_arrow():
 
 	# arrow
 	var endpoints = [Vector2(-10, 20), Vector2(10, 20)]
-	var theta = (-delta).angle_to(Vector2.UP)
+	var theta = -(delta).angle_to(Vector2.UP)
+	print(theta)
 	for end in endpoints:
 		var new_end = Vector2(cos(theta) * end.x - sin(theta) * end.y, sin(theta) * end.x + cos(theta) * end.y)
-		end.x = new_end.x
-		end.y = new_end.y
-	
-	draw_line(-delta, -delta + endpoints[0], Color.BROWN, 4)
-	draw_line(-delta, -delta + endpoints[1], Color.BROWN, 4)
+		draw_line(-delta, -delta + new_end, Color.BROWN, 4)
 	
 
 func _input(event):
