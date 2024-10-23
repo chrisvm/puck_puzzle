@@ -4,11 +4,12 @@ extends Node2D
 var dragging: bool = false
 var delta: Vector2 = Vector2.ZERO
 
+var default_font : Font = ThemeDB.fallback_font;
 
 func _draw() -> void:
 	var color = Color.AQUAMARINE if dragging else Color.WHITE
 	draw_circle(Vector2.ZERO, radius, color, false, 4)
-
+	
 	if dragging:
 		draw_force_arrow()
 		

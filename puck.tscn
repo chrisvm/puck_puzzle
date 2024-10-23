@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bndhbq3fu6eqi"]
+[gd_scene load_steps=6 format=3 uid="uid://bndhbq3fu6eqi"]
 
 [ext_resource type="Script" path="res://scripts/puck.gd" id="1_uc5px"]
 [ext_resource type="Script" path="res://scripts/puck_canvas.gd" id="2_dk60s"]
@@ -9,6 +9,9 @@ bounce = 0.64
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x4sh5"]
 radius = 20.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_nyckb"]
+font_size = 32
 
 [node name="Puck" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_tcddg")
@@ -21,3 +24,20 @@ shape = SubResource("CircleShape2D_x4sh5")
 
 [node name="PuckCanvas" type="Node2D" parent="."]
 script = ExtResource("2_dk60s")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -15.0
+offset_right = 12.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+label_settings = SubResource("LabelSettings_nyckb")
+horizontal_alignment = 1
+vertical_alignment = 1

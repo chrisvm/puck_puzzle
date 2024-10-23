@@ -20,9 +20,18 @@ var delta: Vector2:
 	get:
 		return $PuckCanvas.delta
 
+var _score: int
+var score: int:
+	set(value):
+		_score = value
+		$Label.text = str(value)
+	get:
+		return _score
+		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$CollisionShape2D.shape.radius = radius
+	score = 3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -43,7 +52,7 @@ func _input(event):
 		# Stop dragging if the button is released.
 		if dragging and not event.pressed:
 			dragging = false
-			apply_central_force(-delta * impulse_force)
+			shove(-delta * impulse_force)
 			delta = Vector2.ZERO
 			$PuckCanvas.queue_redraw()
 	
@@ -51,4 +60,6 @@ func _input(event):
 		delta = event.position - position
 		$PuckCanvas.queue_redraw()
 	
-	
+func shove(direction: Vector2):
+	apply_central_force(direction)
+	score -= 1
