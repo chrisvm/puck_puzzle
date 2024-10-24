@@ -24,6 +24,7 @@ shape = SubResource("CircleShape2D_x4sh5")
 
 [node name="PuckCanvas" type="Node2D" parent="."]
 script = ExtResource("2_dk60s")
+radius = 40
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 8
